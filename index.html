@@ -10,13 +10,14 @@
         z-index: 9999;
       }
       button {
-        padding: 0px 0px;
+        padding: 10px 20px;
         font-size: 16px;
         color: #fff;
         background-color: #000;
         border: none;
         border-radius: 5px;
         bottom: 20px;
+        left: 50%;
         transform: translateX(-50%);
       }
       button:hover {
@@ -74,7 +75,7 @@
         moreInfoImage.src = "Button Design-03.png"; // Replace with the path to your green button PNG image
         moreInfoImage.id = "more-info-img";
         moreInfoImage.addEventListener("click", () => {
-          window.open('https://pso-pocketguide.vercel.app/?animation=6&link=link2', '_blank'); // Open index.html with the 6th animation
+          window.open('https://pso-pocketguide.vercel.app/?animation=6', '_blank'); // Open index.html with the 6th animation
         });
         document.body.appendChild(moreInfoImage);
 
@@ -107,14 +108,14 @@
         const start = async() => {
           const mindarThree = new window.MINDAR.IMAGE.MindARThree({
             container: document.body,
-            imageTargetSrc: 'carient_plus.mind',
+            imageTargetSrc: 'carient_plus_20W_50.mind',
           });
           const {renderer, scene, camera} = mindarThree;
 
           const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
           scene.add(light);
 
-          const gltf = await loadGLTF('carient_plus.glb');
+          const gltf = await loadGLTF('carient_plus_20W_50_spin.glb');
           gltf.scene.scale.set(0.1,0.1,0.1);
           gltf.scene.position.set(0, -0.4, 0);
 
@@ -140,11 +141,29 @@
               button.style.display = 'none';
             });
           };
-
+          
           // Variables for mouse drag rotation
           let isDragging = false;
           let previousMouseX = 0;
           const rotationSpeed = 0.01; // Adjust rotation speed as needed
+
+          // Add event listeners for mouse drag rotation
+          document.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            previousMouseX = event.clientX;
+          });
+
+          document.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+              const deltaX = event.clientX - previousMouseX;
+              gltf.scene.rotation.y += deltaX * rotationSpeed; // Rotate along Y-axis
+              previousMouseX = event.clientX;
+            }
+          });
+
+          document.addEventListener('mouseup', () => {
+            isDragging = false;
+          });
 
           // Add touch event listeners for mobile devices
           document.addEventListener('touchstart', (event) => {
@@ -179,10 +198,10 @@
             }
           });
 
+
           await mindarThree.start();
           renderer.setAnimationLoop(() => {
             const delta = clock.getDelta();
-            gltf.scene.rotation.set(0, 0, 0);
             mixer.update(delta);
             renderer.render(scene, camera);
           });
