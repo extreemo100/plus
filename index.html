@@ -146,24 +146,6 @@
           let previousMouseX = 0;
           const rotationSpeed = 0.01; // Adjust rotation speed as needed
 
-  // Add event listeners for mouse drag rotation
-          document.addEventListener('mousedown', (event) => {
-            isDragging = true;
-            previousMouseX = event.clientX;
-          });
-
-          document.addEventListener('mousemove', (event) => {
-            if (isDragging) {
-              const deltaX = event.clientX - previousMouseX;
-              gltf.scene.rotation.y += deltaX * rotationSpeed; // Rotate along Y-axis
-              previousMouseX = event.clientX;
-            }
-          });
-
-          document.addEventListener('mouseup', () => {
-            isDragging = false;
-          });
-
           // Add touch event listeners for mobile devices
           document.addEventListener('touchstart', (event) => {
             isDragging = true;
@@ -196,7 +178,6 @@
               action.paused = !action.paused; // Toggle paused state
             }
           });
-
 
           await mindarThree.start();
           renderer.setAnimationLoop(() => {
