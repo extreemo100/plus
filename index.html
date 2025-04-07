@@ -78,7 +78,7 @@
         moreInfoImage.id = "more-info-img";
         moreInfoImage.loading = "lazy"; // Add lazy loading
         moreInfoImage.addEventListener("click", () => {
-          window.open('https://pso-pocketguide.vercel.app/?animation=6&link=link2', '_blank'); // Open index.html with the 6th animation
+          window.open('https://3d-book-viewer.vercel.app/?animation=6&link=link2', '_blank'); // Open index.html with the 6th animation
         });
         document.body.appendChild(moreInfoImage);
 
@@ -122,7 +122,7 @@
           const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
           scene.add(light);
 
-          const gltf = await loadGLTF('plus_blender.glb');
+          const gltf = await loadGLTF('plus.glb');
           gltf.scene.scale.set(0.1,0.1,0.1);
           gltf.scene.position.set(0, -0.4, 0);
 
